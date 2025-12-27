@@ -18,9 +18,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "outDir": "./build/static/js",
   },
+  "types": ["chrome"],
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules" // Exclude the 'node_modules' directory
   ]
 }
