@@ -24,9 +24,18 @@ function isWithinBlockedTime(startTime: string, endTime: string): boolean {
 
 // Function to check if a tab's URL should be blocked and redirect if necessary
 function checkAndRedirect(tabId: number, url: string) {
+    const blockedSites: BlockedSite[] = JSON.parse(localStorage.getItem('blockedSites') || '[]');
+    blockedSites.forEach((siteObj) => {
+         if (url.includes(siteObj.site) && isWithinBlockedTime(siteObj.startTime, siteObj.endTime)) {
+            chrome.tabs.update(tabId, { url: chrome.runtime.getURL('blocked.html') });
+        }
+    });
+    if (blockedSites.length === 0) {
+        localStorage.setItem('blockedSites', JSON.stringify([]));
+        return;
+    }
   chrome.storage.sync.get('blockedSites', (data) => {
     const blockedSites: BlockedSite[] = data.blockedSites || [];
-
     blockedSites.forEach((siteObj) => {
       if (url.includes(siteObj.site) && isWithinBlockedTime(siteObj.startTime, siteObj.endTime)) {
         chrome.tabs.update(tabId, { url: chrome.runtime.getURL('blocked.html') });

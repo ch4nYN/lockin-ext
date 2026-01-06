@@ -42,7 +42,7 @@ const App: React.FC = () => {
             endTime: site.endTime
         }
     })
-    chrome.storage.sync.set({ blockedSites: _blockedSites });
+    localStorage.setItem('blockedSites', JSON.stringify(_blockedSites));
   }
 
   useEffect(() => {
