@@ -30,21 +30,6 @@ const App: React.FC = () => {
     },
   ]
 
-  const immediateLockout = () => {
-    const _blockedSites = blockedSites.map(site => {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const modifiedStartTime = `${hours}:${minutes}`;
-        return {
-            ...site,
-            startTime: modifiedStartTime,
-            endTime: site.endTime
-        }
-    })
-    localStorage.setItem('blockedSites', JSON.stringify(_blockedSites));
-  }
-
   useEffect(() => {
     chrome.storage.sync.set({ blockedSites: blockedSites });
   }, [blockedSites])
@@ -52,9 +37,6 @@ const App: React.FC = () => {
   return (
     <div>
         <div>fuck you lol. lock in you fucking pussy</div>
-        <div>
-            <button onClick={() => immediateLockout()}>Immediate Lockout Pussy</button>
-        </div>
     </div>
   );
 };
